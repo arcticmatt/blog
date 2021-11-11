@@ -76,7 +76,7 @@ Here's what the instruction looks like on [Solana Explorer](https://explorer.sol
 
 Finally, here's a diagram of all the accounts in play so far. It's quite simple for now, but gets complicated later on.
 
-/candy-machine-initialize-config.png
+![alt](./candy-machine-initialize-config.png)
 
 ## 2. Adding config lines
 `nft_candy_machine::add_config_lines` adds lines to the config. There is one line per NFT in the Candy Machine. Each line contains the NFT's name and a URI pointing to its metadata.
@@ -136,7 +136,7 @@ If you copy/paste the instruction data into a [hex decoder](https://www.converts
 
 At this point, nothing has changed with our account diagram. The only difference is that the config account has had some data added to it.
 
-/candy-machine-initialize-config.png
+![alt](./candy-machine-initialize-config.png)
 
 
 ## 3. Creating the Candy Machine
