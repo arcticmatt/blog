@@ -338,7 +338,7 @@ pub struct Metadata {
 }
 ```
 
-We can take a look at this [Degen Ape on Solana Explorer](https://explorer.solana.com/address/HRoxDQ7nHpejLgEFbdbDgs7b7VPAUZ6F3CTbNtTib8CL/metadata) to see some example metadata. Note that the URI stored in the metadata account ([https://arweave.net/2sidyd5iuw5q0yCaPYSWa9npKs7-wKlWmCdqt8uiZTE in this example](https://arweave.net/2sidyd5iuw5q0yCaPYSWa9npKs7-wKlWmCdqt8uiZTE)) points to a JSON file stored on Arweave that *also* stores the NFT's metadata. For example, the metadata stored on Arweave contains the NFT's name, description, and a link to its image—things that don't need to be accessed on-chain. The metadata account stores info that needs to be read/written on-chain, like how much royalties are distributed to the NFT's creators.
+We can take a look at this [Degen Ape on Solana Explorer](https://explorer.solana.com/address/HRoxDQ7nHpejLgEFbdbDgs7b7VPAUZ6F3CTbNtTib8CL/metadata) to see some example metadata. Note that the URI stored in the metadata account ([https://arweave.net/2sidyd5iuw5q0yCaPYSWa9npKs7-wKlWmCdqt8uiZTE](https://arweave.net/2sidyd5iuw5q0yCaPYSWa9npKs7-wKlWmCdqt8uiZTE) in this example) points to a JSON file stored on Arweave that *also* stores the NFT's metadata. For example, the metadata stored on Arweave contains the NFT's name, description, and a link to its image—things that don't need to be accessed on-chain. The metadata account stores info that needs to be read/written on-chain, like how much royalties are distributed to the NFT's creators.
 
 Here's the data stored in the master edition account:
 
