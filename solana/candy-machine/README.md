@@ -4,10 +4,10 @@
 
 There are four main steps involved to set up a Candy Machine.
 
-1. First, you create an account that contains configuration data (e.g. the symbol of your NFTs). This is done by calling the initialize_config instruction of the Candy Machine program.
-2. Second, you add "config lines" to the config account. There's one line for each NFT in the collection, and each line contains the name of the asset and a URI pointing to its metadata.
-2. Next, you create an account that contains the rest of the Candy Machine's info (e.g. the address of the wallet that minting proceeds should go to). This is done by calling the initialize_candy_machine instruction of the Candy Machine program. I'm actually not sure why the configuration account is different from the Candy Machine account-maybe it's to work around size limitations?
-3. Finally, when someone wants to mint an NFT, they call the mint_nft instruction of the Candy Machine program. 
+1. First, you create an account that contains configuration data (e.g. the symbol of your NFTs). This is done by calling the `nft_candy_machine::initialize_config` instruction of the Candy Machine program.
+2. Second, you add "config lines" to the config account. There's one line for each NFT in the collection, and each line contains the name of the asset and a URI pointing to its metadata. The `nft_candy_machine::add_config_lines` instruction does this.
+2. Next, you create an account that contains the rest of the Candy Machine's info (e.g. the address of the wallet that minting proceeds should go to). This is done by calling the `nft_candy_machine::initialize_candy_machine` instruction of the Candy Machine program. I'm actually not sure why the configuration account is different from the Candy Machine account-maybe it's to work around size limitations?
+3. Finally, when someone wants to mint an NFT, they call the `nft_candy_machine::mint_nft` instruction.
 
 Let's go over each of these steps in more detail.
 
@@ -67,19 +67,19 @@ pub struct ConfigData {
 }
 ```
 
-Here's what the instruction looks like on [Solana Explorer](https://explorer.solana.com/tx/2vZzQg8uHa6HoQVu1QDDmARUqAuYotCtiFDq7NTTwEvtj1FsR2mCjnVaX9SXp6RKVFoKyuS2LkzuKZN58tMtQGiL?cluster=devnet). Note that the instruction's transaction also includes an instruction that creates the account (with address `6eZ5ycD92Xw71kQFV1HQ5DV44KgeAAbA8dKnF25Xs73D`) and sets its owner to the Candy Machine program.
+Here's what the instruction looks like on [Solana Explorer](https://explorer.solana.com/tx/2vZzQg8uHa6HoQVu1QDDmARUqAuYotCtiFDq7NTTwEvtj1FsR2mCjnVaX9SXp6RKVFoKyuS2LkzuKZN58tMtQGiL?cluster=devnet). Note that the instruction's transaction also includes an instruction that creates the account (address `6eZ5ycD92Xw71kQFV1HQ5DV44KgeAAbA8dKnF25Xs73D`) and sets its owner to the Candy Machine program.
 
-| Instruction # | Program | Instruction Name |
-|:--|:--|:--|
-| 1 | System Program | Create Account |
-| 2 | Candy Machine Program | Initialize Config |
+| Instruction # | Program | Instruction Name | Notes |
+|:--|:--|:--|:--|
+| 1 | System Program | Create Account | Creates the config account, sets its own to the Candy Machine program.
+| 2 | Candy Machine Program | Initialize Config | Initializes the config account's data 
 
-Finally, here's a diagram of all the accounts in play so far. It's quite simple for now, but gets complicated later on.
+Finally, here's a diagram of all the accounts in play so far. It's quite simple for now.
 
 ![](./candy-machine-initialize-config.png)
 
 ## 2. Adding config lines
-`nft_candy_machine::add_config_lines` adds lines to the config. There is one line per NFT in the Candy Machine. Each line contains the NFT's name and a URI pointing to its metadata.
+`nft_candy_machine::add_config_lines` adds lines to the config. There is one line per NFT. Each line contains the NFT's name and a URI pointing to its metadata.
 
 Here's the function signature:
 
@@ -203,10 +203,10 @@ Note that the account stores the config account's address (`Pubkey`).
 
 Here's what the instruction looks like on [Solana Explorer](https://explorer.solana.com/tx/UKZ1D7s8WvvGPC381AG5btCLsBa2PpveoEwbBmb7Dmeg6DE9HgmaADftex2DF5g6KKVgVD7WYMEW5Qf31tVm6bW?cluster=devnet). 
 
-| Instruction # | Program | Instruction Name |
-|:--|:--|:--|
-| 1 | Candy Machine Program | Initialize Candy Machine |
-| 1.1 | System Program | Create Account |
+| Instruction # | Program | Instruction Name | Notes |
+|:--|:--|:--|:--|
+| 1 | Candy Machine Program | Initialize Candy Machine | Creates the Candy Machine account and initializes its data.
+| 1.1 | System Program | Create Account | Creates the Candy Machine account.
 
 Finally, here's a diagram of all the accounts in play so far. It's starting to get more complicated... here are some things to note. 
 
@@ -372,7 +372,7 @@ Ok, that's all I wanted to cover (I guess it was kind of a lot though). Here's a
 1. Before minting starts for an NFT collection, the collection's creator must:
 	2. Initialize a Candy Machine config account (stores config data about the Candy Machine)
 	3. Initialize a Candy Machine account (stores more info about the Candy Machine). This is a PDA!
-	4. Add lines to the config. Each line contains a single NFT's name and a link to its asset.
+	4. Add lines to the config. Each line contains a single NFT's name and a link to its metadata.
 5. Then, in order to mint an NFT from the Candy Machine, `nft_candy_machine::mint_instruction` is called. You can check out the [candy-machine-mint](https://github.com/exiled-apes/candy-machine-mint) repo to see an example of how this is done. That instruction will do the following:
 	6. Transfer SOL/tokens from the minter to the Candy Machine's wallet (to pay for the NFT).
 	7. Create a metadata PDA for the NFT's mint account (this marks it as a Metaplex NFT).
