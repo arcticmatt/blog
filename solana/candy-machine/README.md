@@ -371,7 +371,7 @@ Ok, that's all I wanted to cover (I guess it was kind of a lot though). Here's a
 	2. Initialize a Candy Machine config account (stores config data about the Candy Machine)
 	3. Initialize a Candy Machine account (stores more info about the Candy Machine). This is a PDA!
 	4. Add lines to the config. Each line contains a single NFT's name and a link to its metadata.
-5. Then, in order to mint an NFT from the Candy Machine, `nft_candy_machine::mint_instruction` is called. You can check out the [candy-machine-mint](https://github.com/exiled-apes/candy-machine-mint) repo to see an example of how this is done. That instruction will do the following:
+5. Then, in order to mint an NFT from the Candy Machine, `nft_candy_machine::mint_nft` is called. You can check out the [candy-machine-mint](https://github.com/exiled-apes/candy-machine-mint) repo to see an example of how this is done. That instruction will do the following:
 	6. Transfer SOL/tokens from the minter to the Candy Machine's wallet (to pay for the NFT).
 	7. Create a metadata PDA for the NFT's mint account (this marks it as a Metaplex NFT).
 	8. Create a master edition PDA for the NFT's mint account (this controls how many copies of the NFT can be made).
@@ -379,6 +379,6 @@ Ok, that's all I wanted to cover (I guess it was kind of a lot though). Here's a
 Here's an even simpler explanation:
 
 1. First, you tell the Candy Machine program to create a new Candy Machine account. This contains info like how many NFTs are available, and the price of the NFTs.
-2. Then, when someone wants to mint an NFT from your Candy Machine, they call `nft_candy_machine::mint_instruction` and pass the Candy Machine account created in step #1. `mint_instruction` uses the info contained in the Candy Machine account (e.g. it uses the price to determine how much SOL to transfer from the minter).
+2. Then, when someone wants to mint an NFT from your Candy Machine, they call `nft_candy_machine::mint_nft` and pass the Candy Machine account created in step #1. `mint_nft` uses the info contained in the Candy Machine account (e.g. it uses the price to determine how much SOL to transfer from the minter).
 
 When it comes down to it, Candy Machine is basically just a wrapper around [Solana's token program](https://spl.solana.com/token). It provides a nice API for minting a collection of NFTs and associating metadata with them, but at the core of it all are mint accounts and token accounts (as [the docs show](https://spl.solana.com/token#example-create-a-non-fungible-token), you can create an NFT just with the `spl-token` CLI). That's not to say that Candy Machine isn't useful—it's incredibly useful, and used by just about every Solana NFT collection out there! But if you want to understand how it works, don't psych yourself out—there's nothing too magical going on 😛
