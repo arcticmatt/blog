@@ -347,14 +347,12 @@ Here's the data stored in the master edition account:
 #[derive(Clone, Debug, PartialEq, BorshSerialize, BorshDeserialize)]
 pub struct MasterEditionV2 {
     pub key: Key,
-
     pub supply: u64,
-
     pub max_supply: Option<u64>,
 }
 ```
 
-This is pretty simple. `supply` is how many copies (i.e. ["editions"](https://docs.metaplex.com/architecture/deep_dive/overview#edition) of the NFT can be made). `max_supply` is the max amount of copies allowed—if `max_supply === 0`, it means the NFT is a 1/1. 
+This is pretty simple. `supply` is how many copies (i.e. ["editions"](https://docs.metaplex.com/architecture/deep_dive/overview#edition)) of the NFT have been made. `max_supply` is the max amount of copies allowed—if `max_supply === 0`, it means the NFT is a 1/1. 
 
 There's one more thing I want to cover regarding master editions. The [`metaplex_token_metadata::process_create_master_edition`](https://github.com/metaplex-foundation/metaplex/blob/master/rust/token-metadata/program/src/processor.rs#L340-L342) function contains the following code: 
 
