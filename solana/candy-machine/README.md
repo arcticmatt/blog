@@ -368,10 +368,13 @@ In plain English, if the mint account passed to the `process_create_metadata_edi
 Ok, that's all I wanted to cover (I guess it was kind of a lot though). Here's a quick recap:
 
 1. Before minting starts for an NFT collection, the collection's creator must:
+
 	2. Initialize a Candy Machine config account (stores config data about the Candy Machine)
 	3. Initialize a Candy Machine account (stores more info about the Candy Machine). This is a PDA!
 	4. Add lines to the config. Each line contains a single NFT's name and a link to its metadata.
+
 5. Then, in order to mint an NFT from the Candy Machine, `nft_candy_machine::mint_nft` is called. You can check out the [candy-machine-mint](https://github.com/exiled-apes/candy-machine-mint) repo to see an example of how this is done. That instruction will do the following:
+
 	6. Transfer SOL/tokens from the minter to the Candy Machine's wallet (to pay for the NFT).
 	7. Create a metadata PDA for the NFT's mint account (this marks it as a Metaplex NFT).
 	8. Create a master edition PDA for the NFT's mint account (this controls how many copies of the NFT can be made).
