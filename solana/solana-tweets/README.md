@@ -15,4 +15,5 @@
 
 1. [How transaction fees are calculated](https://twitter.com/jstrry/status/1459853463295348740) by [@jstrry](https://twitter.com/jstrry)
 2. [Metaplex auction house contract explained](https://twitter.com/armaniferrante/status/1460760940454965248) by [@armaniferrante](https://twitter.com/armaniferrante)
+3. [Differences from Ethereum](https://twitter.com/pirosb3/status/1460679770396520448) by [@pirosb3](https://twitter.com/pirosb3/status/1460679770396520448)
 
