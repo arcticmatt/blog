@@ -104,10 +104,10 @@ pub struct AuctionHouse {
 Here's how this instruction works:
 
 1. First, some validation. There are three scenarios in which `ErrorCode::SalesRequireSigner` is returned
-	* **TODO**: fully understand why an error is returned in these scenarios
 	* If the wallet is not a signer and the buy price is 0
 	* If the wallet is not a signer, and the buy price is greater than 0, and `free_seller_trade_state` is empty
 	*  If the wallet is not a signer, and the buy price is greater than 0, and `free_seller_trade_state` is not empty, and either `authority` is not a signer or the `auction_house` can't change the sale price
+	*  IMPORTANTLY, `free_seller_trade_state` will only be non-empty if the seller has already called `sell` with a price of 0
 2.  Next, the `fee_payer` is found via `get_fee_payer` 
 	*  If `authority` is a signer, the fee payer is `auction_house_fee_account`
 	*  Else, if `wallet` is a signer, the fee payer is `wallet`
